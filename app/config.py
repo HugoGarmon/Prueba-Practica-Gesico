@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Configuración de la aplicación cargada desde variables de entorno."""
     OLLAMA_BASE_URL: str = "http://localhost:11434"
-    LLM_MODEL: str = "qwen2.5:3b"
+    LLM_MODEL: str = "qwen2.5-coder:7b"
     LOG_LEVEL: str = "INFO"
     APP_HOST: str = "0.0.0.0"
     APP_PORT: int = 8000

@@ -45,7 +45,7 @@ def mock_openai_client(mock_llm_response):
 
     # Mock for health check
     mock_model = MagicMock()
-    mock_model.id = "qwen2.5:3b"
+    mock_model.id = "qwen2.5-coder:7b"
     mock_models_list = MagicMock()
     mock_models_list.data = [mock_model]
     mock_client.models.list = AsyncMock(return_value=mock_models_list)

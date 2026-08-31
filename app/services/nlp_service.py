@@ -123,14 +123,14 @@ class NLPService:
                 processing_time_ms=round(processing_time, 2),
             )
 
+        except APITimeoutError as e:
+            logger.error(f"Timeout del LLM: {e}")
+            raise LLMTimeoutError()
         except APIConnectionError as e:
             logger.error(f"No se pudo conectar con Ollama: {e}")
             raise OllamaConnectionError(
                 "No se pudo conectar con Ollama. ¿Está el servicio ejecutándose?"
             )
-        except APITimeoutError as e:
-            logger.error(f"Timeout del LLM: {e}")
-            raise LLMTimeoutError()
         except APIStatusError as e:
             logger.error(f"Error de la API de Ollama: {e.status_code} - {e.message}")
             if e.status_code == 404:

@@ -1,0 +1,32 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: gesico-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  api:
+    build: .
+    container_name: gesico-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - LLM_MODEL=qwen2.5:3b
+      - LOG_LEVEL=INFO
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_data:
